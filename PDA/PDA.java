@@ -11,29 +11,42 @@ public class PDA
 {
     Scanner scanner = new Scanner(System.in);
     int age = 0;
-    int LOWER_BOUND = 0;
-    float ageLow = (age / 2) + 7;
-    ageLow = Math.ceil(ageLow);
-    float ageHigh = (age - 7) * 2;
-    ageHigh = Math.floor(ageHigh);
+    int LOWER_BOUND = 14;
+    int realagelow = 0;
+    int realagehigh = 0;
+    boolean shouldContinue = true;
     public PDA()
     {
         // We don't need to do anything in the constructor for
         // our program.
     }
+    public void minage() {
+        double agelow = age;
+        realagelow = (int)Math.ceil(agelow/2) + 7;
+    }
+    public void maxage() {
+        double agehigh = age;
+        realagehigh = (int)Math.floor(agehigh-7) * 2;
+    }
     /**
      * This is the main event loop for our PDA program
      */
     public void runEventLoop() {
-        while (true) {
-            System.out.println("How old are you?");
+        while (shouldContinue) {
+            System.out.println("How old are you? Enter 0 to end program.");
             try {
                 age = scanner.nextInt();
+                if (age == 0) {
+                    System.out.println("Program eneded :(");
+                    shouldContinue = false;
+                }
                 System.out.println(age);
-                if (age < LOWER_BOUND) {
+                if (age < LOWER_BOUND && age != 0) {
                     System.out.println(age + " is too young!");
-                } else  {
-                    System.out.println("You're age range is " + ageLow + " " + ageHigh);
+                } else if (age != 0) {
+                    minage();
+                    maxage();
+                    System.out.println("You're age range is " + realagelow + " " + realagehigh);
                 }
             } catch (InputMismatchException error) {
                 System.out.println("Please enter an integer");
